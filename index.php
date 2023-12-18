@@ -71,6 +71,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p class="mb-1">Área: <?= $area ?></p>
             <p class="mb-1">Perímetro: <?= $perimetro ?></p>
         </div>
+
+        <!-- SweetAlert2 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+        <!-- SweetAlert2 Additional Styles -->
+        <style>
+            .swal2-popup {
+                font-size: 1.6rem !important;
+            }
+        </style>
+
+        <!-- SweetAlert2 Script -->
+        <script>
+            Swal.fire({
+                title: 'Calculando...',
+                html: '<p class="mb-1">Todo Correcto</p>',
+                icon: 'success',
+                confirmButtonColor: '#007bff',
+            });
+        </script>
     </body>
     </html>
     <?php
@@ -84,6 +104,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Figuras Geométricas</title>
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+
+    <!-- Additional styles for SweetAlert2 -->
+    <style>
+        .swal2-popup {
+            font-size: 1.6rem !important;
+        }
+    </style>
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <style>
@@ -161,6 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "</div>";
     }
     ?>
+
 
     <!-- Bootstrap JS (opcional, solo si necesitas funcionalidades específicas) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
