@@ -57,12 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- SweetAlert2 JS -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-        <!-- SweetAlert2 Additional Styles -->
-        <style>
-            .swal2-popup {
-                font-size: 1.6rem !important;
-            }
-        </style>
         <!-- Botón para ir atrás -->
         <script>
             function irAtras() {
@@ -94,14 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Calculadora de Figuras Geométricas</title>
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
-
-    <!-- Additional styles for SweetAlert2 -->
-    <style>
-        .swal2-popup {
-            font-size: 1.6rem !important;
-        }
-    </style>
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/styles2.css">
