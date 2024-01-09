@@ -56,23 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- SweetAlert2 JS -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
-        <!-- Botón para ir atrás -->
-        <script>
-            function irAtras() {
-                // Redirige a la página deseada
-                window.location.href = 'index.php';
-            }
-        </script>
-        <!-- SweetAlert2 Script -->
-        <script>
-            Swal.fire({
-                title: 'Calculando...',
-                html: '<p class="mb-1">Todo Correcto</p>',
-                icon: 'success',
-                confirmButtonColor: '#007bff',
-            });
-        </script>
+        <script src="./js/script.js"></script>
     </body>
     </html>
     <?php
