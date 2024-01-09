@@ -35,30 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <title>Resultados</title>
-        <style>
-            body {
-                background-color: #f8f9fa;
-                padding: 20px;
-            }
-
-            h2 {
-                color: #007bff;
-            }
-
-            .resultados {
-                max-width: 400px;
-                margin: 0 auto;
-                background-color: #fff;
-                padding: 20px;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            }
-
-            p {
-                margin: 10px 0;
-            }
-        </style>
+        <link rel="stylesheet" href="./css/styles.css">
     </head>
     <body>
         <div class="resultados">
@@ -70,6 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
             <p class="mb-1">Área: <?= $area ?></p>
             <p class="mb-1">Perímetro: <?= $perimetro ?></p>
+            <br>
+            <button onclick="irAtras()" class="btn btn-primary">Atrás</button>
         </div>
 
         <!-- SweetAlert2 JS -->
@@ -81,7 +63,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 font-size: 1.6rem !important;
             }
         </style>
-
+        <!-- Botón para ir atrás -->
+        <script>
+            function irAtras() {
+                // Redirige a la página deseada
+                window.location.href = 'index.php';
+            }
+        </script>
         <!-- SweetAlert2 Script -->
         <script>
             Swal.fire({
@@ -116,40 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <style>
-        body {
-            background-color: #f8f9fa;
-            padding: 20px;
-        }
-
-        h1 {
-            color: #007bff;
-        }
-
-        form {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        label {
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        select, input {
-            margin-bottom: 10px;
-        }
-
-        button {
-            background-color: #007bff;
-            color: #fff;
-        }
-
-        p {
-            margin-top: 20px;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/styles2.css">
 </head>
 <body class="container mt-5">
     <h1 class="text-center">Selecciona una figura geométrica</h1>
@@ -193,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ?>
 
 
-    <!-- Bootstrap JS (opcional, solo si necesitas funcionalidades específicas) -->
+    <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js" integrity="sha384-9aD5VamoNlXy+i+1AuSfTz1aMbsv6QY0xkqF6WgDRGrFq0RJLpGShngzky1R3DAf" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy6pBkS0lE9RMI/RmN52l8DA/DJ4NHAfF5" crossorigin="anonymous"></script>
