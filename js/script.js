@@ -24,6 +24,19 @@ function validarFormulario() {
     return true;
 }
 
+// SweetAlert de correcto
+document.addEventListener('DOMContentLoaded', function () {
+    Swal.fire({
+        title: 'Calculando...',
+        html: '<p class="mb-1">Todo Correcto</p>',
+        icon: 'success',
+        confirmButtonColor: '#007bff',
+    });
+});
+
+// Habilitar inicialmente el campo "lado2"
+document.getElementById('lado2').disabled = false;
+
 // Agrega un listener para detectar cambios en la opción seleccionada
 document.getElementById('tipoFigura').addEventListener('change', function () {
     var figura = this.value;
@@ -37,11 +50,3 @@ function irAtras() {
     // Redirige a la página deseada
     window.location.href = 'index.php';
 }
-
-// SweetAlert2 Script
-Swal.fire({
-    title: 'Calculando...',
-    html: '<p class="mb-1">Todo Correcto</p>',
-    icon: 'success',
-    confirmButtonColor: '#007bff',
-});
