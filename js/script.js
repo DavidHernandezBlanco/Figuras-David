@@ -24,15 +24,23 @@ function validarFormulario() {
     return true;
 }
 
-// SweetAlert de correcto
 document.addEventListener('DOMContentLoaded', function () {
     Swal.fire({
-        title: 'Calculando...',
-        html: '<p class="mb-1">Todo Correcto</p>',
+        title: '¡Cálculos Completados!',
+        html: `
+            <p class="mb-1">Todos los cálculos se realizaron con éxito.</p>
+            <hr>
+            <p class="mb-0">Detalles adicionales o resultados aquí.</p>
+        `,
         icon: 'success',
-        confirmButtonColor: '#007bff',
+        showCloseButton: true,
+        showConfirmButton: false,
+        customClass: {
+            closeButton: 'btn btn-secondary'
+        }
     });
 });
+
 
 // Habilitar inicialmente el campo "lado2"
 document.getElementById('lado2').disabled = false;
