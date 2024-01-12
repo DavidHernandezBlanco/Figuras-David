@@ -1,35 +1,75 @@
 body {
     background-color: #f8f9fa;
     padding: 20px;
+    font-family: 'Arial', sans-serif;
 }
 
 h1 {
     color: #007bff;
+    text-align: center;
 }
 
 form {
-    max-width: 400px;
+    max-width: 500px;
     margin: 0 auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 label {
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 15px;
+    display: block;
 }
 
 select, input {
-    margin-bottom: 10px;
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 2px solid #007bff;
+    border-radius: 8px;
 }
 
 button {
     background-color: #007bff;
     color: #fff;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
 }
 
-p {
-    margin-top: 20px;
-    font-weight: bold;
+button:hover {
+    background-color: #0056b3;
 }
+
+.resultados {
+    max-width: 500px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 20px;
+    border: 2px solid #f5c6cb;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.alert p {
+    margin: 0;
+}
+
 .swal2-popup {
-    font-size: 1.6rem !important;
+    font-size: 1.8rem !important;
 }

@@ -1,24 +1,73 @@
 body {
     background-color: #f8f9fa;
     padding: 20px;
+    font-family: 'Arial', sans-serif;
 }
 
 h2 {
     color: #007bff;
+    text-align: center;
 }
 
 .resultados {
-    max-width: 400px;
-    margin: 0 auto;
+    max-width: 600px;
+    margin: 20px auto;
     background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
-p {
-    margin: 10px 0;
+label {
+    display: block;
+    margin: 15px 0;
 }
+
+input,
+select {
+    width: calc(100% - 24px);
+    padding: 14px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 1px solid #007bff;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+input:focus,
+select:focus {
+    border-color: #0056b3;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 16px 26px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 16px;
+    border: 2px solid #f5c6cb;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.alert p {
+    margin: 0;
+}
+
 .swal2-popup {
-    font-size: 1.6rem !important;
+    font-size: 1.8rem !important;
 }
