@@ -2,10 +2,12 @@
 // Clase para el triángulo
 class Triangulo extends FiguraGeometrica implements PerimetroM {
     protected $lado2;
+    protected $altura;
 
-    public function __construct($lado1, $lado2) {
-        parent::__construct("Triángulo", $lado1);
+    public function __construct($base, $lado2, $altura = null) {
+        parent::__construct("Triángulo", $base);
         $this->lado2 = $lado2;
+        $this->altura = $altura ?? $lado2 / 2; // Utiliza la mitad del lado2 si altura no se proporciona
     }
 
     public function getLado2() {
@@ -16,13 +18,23 @@ class Triangulo extends FiguraGeometrica implements PerimetroM {
         $this->lado2 = $lado2;
     }
 
+    public function getAltura() {
+        return $this->altura;
+    }
+
+    public function setAltura($altura) {
+        $this->altura = $altura;
+    }
+
     public function area() {
-        // Implementa el cálculo del área para el triángulo
-        return ($this->lado1 * $this->lado2) / 2;
+        // Implementa el cálculo del área para el triángulo con base y altura
+        return ($this->getLado1() * $this->altura) / 2;
     }
 
     public function perimetro() {
         // Implementa el cálculo del perímetro para el triángulo
-        return $this->lado1 + $this->lado2 + parent::getLado1();
+        return $this->getLado1() + $this->lado2 + parent::getLado1();
     }
 }
+
+?>
