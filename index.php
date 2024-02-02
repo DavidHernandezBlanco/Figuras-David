@@ -7,6 +7,9 @@ $figura = null;
 // Array para almacenar mensajes de error durante la validación
 $errors = [];
 
+// Número para calcular su cuadrado
+$numero = null;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Comprobar si 'tipoFigura' y 'lado1' están presentes en $_POST
     if (isset($_POST['tipoFigura'], $_POST['lado1'])) {
@@ -35,30 +38,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
-
-        // Mostrar errores con SweetAlert2 si existen
-        if (!empty($errors)) {
-            mostrarErrores($errors);
-        } else {
-            // Si no hay errores, continuar con el código para manejar el formulario
-            $figura = crearFigura($figura, $lado1, $lado2 ?? null);
-
-            // Calcular área y perímetro
-            $area = Utiles::area($figura);
-            $perimetro = Utiles::perimetro($figura);
-
-            // Generar página de resultados
-            mostrarResultados($figura, $lado1, $lado2 ?? null, $area, $perimetro);
-            exit; // Terminar el script después de mostrar resultados
-        }
     } else {
         $errors[] = "Datos del formulario incompletos";
-        mostrarErrores($errors);
     }
-} else {
-    // Mostrar formulario si no se ha enviado
-    mostrarFormulario();
+
+    // Validar el campo 'numero' para el cuadrado
+    if (isset($_POST['numero'])) {
+        $numero = floatval($_POST['numero']);
+        if ($numero <= 0) {
+            $errors[] = "El número debe ser un número positivo";
+        }
+    }
+
+    // Mostrar errores con SweetAlert2 si existen
+    if (!empty($errors)) {
+        mostrarErrores($errors);
+    } else {
+        // Si no hay errores, continuar con el código para manejar el formulario
+        $figura = crearFigura($figura, $lado1, $lado2 ?? null);
+
+        // Calcular área y perímetro
+        $area = Utiles::area($figura);
+        $perimetro = Utiles::perimetro($figura);
+
+        // Generar página de resultados
+        mostrarResultados($figura, $lado1, $lado2 ?? null, $area, $perimetro, $numero);
+        exit; // Terminar el script después de mostrar resultados
+    }
 }
+
+// Mostrar formulario si no se ha enviado
+mostrarFormulario();
 
 function crearFigura($tipo, $lado1, $lado2) {
     switch ($tipo) {
@@ -73,7 +83,7 @@ function crearFigura($tipo, $lado1, $lado2) {
     }
 }
 
-function mostrarResultados($figura, $lado1, $lado2, $area, $perimetro) {
+function mostrarResultados($figura, $lado1, $lado2, $area, $perimetro, $numero) {
     ?>
     <!DOCTYPE html>
     <html lang="es">
@@ -93,11 +103,14 @@ function mostrarResultados($figura, $lado1, $lado2, $area, $perimetro) {
         <?php if ($lado2 !== null) : ?>
             <p class="mb-1">Lado 2: <?= $lado2 ?></p>
         <?php endif; ?>
-        <?php if ($figura instanceof Triangulo && $figura->getLado3() !== null) : ?>
-            <p class="mb-1">Lado 3: <?= $figura->getLado3() ?></p>
-        <?php endif; ?>
+
         <p class="mb-1">Área: <?= $area !== null ? $area : 'N/A' ?></p>
         <p class="mb-1">Perímetro: <?= $perimetro !== null ? $perimetro : 'N/A' ?></p>
+        <?php if ($numero !== null) : ?>
+            <br>
+            <p class="mb-1">Número ingresado: <?= $numero ?></p>
+            <p class="mb-1">Cuadrado del número: <?= Utiles::up2($numero) ?></p>
+        <?php endif; ?>
         <br>
         <button onclick="irAtras()" class="btn btn-primary">Atrás</button>
     </div>
@@ -158,6 +171,13 @@ function mostrarFormulario() {
                 <label for="lado2">Lado 2 (solo para Triángulo y Rectángulo):</label>
                 <input type="number" class="form-control" name="lado2" id="lado2" disabled>
                 <span id="errorLado2" style="color: red;"></span>
+            </div>
+
+            <!-- Nuevo campo para ingresar el número -->
+            <div class="form-group">
+                <label for="numero">Número para calcular su cuadrado:</label>
+                <input type="number" class="form-control" name="numero" id="numero">
+                <span id="errorNumero" style="color: red;"></span>
             </div>
 
             <button type="submit" class="btn btn-primary btn-block">Calcular</button>
