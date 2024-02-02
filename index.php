@@ -1,101 +1,127 @@
 <?php
-include "figuras.php";
-include "rectangulo.php";
-include "triangulo.php";
-include "circulo.php";
-include "cuadrado.php";
+require_once './auto/autocarga.php';
 
+// Inicializar $figura con un valor predeterminado
+$figura = null;
+
+// Array para almacenar mensajes de error durante la validación
 $errors = [];
 
-// Página principal
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validar formulario
-    $figura = $_POST['tipoFigura'];
-    $lado1 = floatval($_POST['lado1']);
-
-    if (!in_array($figura, ['Triangulo', 'Rectangulo', 'Cuadrado', 'Circulo'])) {
-        $errors[] = "Tipo de figura no válido";
-    }
-
-    if ($lado1 <= 0) {
-        $errors[] = "Lado 1 debe ser un número positivo";
-    }
-
-    // Validar lado2 para Triángulo y Rectángulo
-    if ($figura === 'Triangulo' || $figura === 'Rectangulo') {
-        $lado2 = floatval($_POST['lado2']);
-        if ($lado2 <= 0) {
-            $errors[] = "Lado 2 debe ser un número positivo";
-        }
-    }
-
-    // Mostrar errores si existen
-    if (!empty($errors)) {
-        echo '<script>
-            Swal.fire({
-                icon: "error",
-                title: "Error de validación",
-                text: "' . implode('\n', $errors) . '",
-                confirmButtonColor: "#007bff"
-            });
-        </script>';
-    } else {
-        // Si no hay errores, continuar con el código para manejar el formulario
+    // Comprobar si 'tipoFigura' y 'lado1' están presentes en $_POST
+    if (isset($_POST['tipoFigura'], $_POST['lado1'])) {
+        // Obtener y validar datos del formulario
         $figura = $_POST['tipoFigura'];
+        $lado1 = floatval($_POST['lado1']);
 
-        if ($figura === 'Triangulo') {
-            $lado2 = floatval($_POST['lado2']);
-            $figura = new Triangulo($lado1, $lado2);
-        } elseif ($figura === 'Rectangulo') {
-            $lado2 = floatval($_POST['lado2']);
-            $figura = new Rectangulo($lado1, $lado2);
-        } elseif ($figura === 'Cuadrado') {
-            $figura = new Cuadrado("Cuadrado", $lado1);
-        } elseif ($figura === 'Circulo') {
-            $figura = new Circulo("Circulo", $lado1);
+        // Validar el tipo de figura seleccionado
+        if (!in_array($figura, ['Triangulo', 'Rectangulo', 'Cuadrado', 'Circulo'])) {
+            $errors[] = "Tipo de figura no válido";
         }
-        
-        // Calcular área y perímetro
-        $area = $figura->area();
-        $perimetro = $figura->perimetro();
-        
 
-        // Mostrar resultados con estilos
-        ?>
-        <!DOCTYPE html>
-        <html lang="es">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <!-- Bootstrap CSS -->
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-            <title>Resultados</title>
-            <link rel="stylesheet" href="./css/styles.css">
-        </head>
-        <body>
-            <div class="resultados">
-                <h2 class="text-center">Resultados</h2>
-                <p class="mb-1">Tipo de figura: <?= $figura->getTipoFigura() ?></p>
-                <p class="mb-1">Lado 1: <?= $figura->getLado1() ?></p>
-                <?php if (isset($lado2)) : ?>
-                    <p class="mb-1">Lado 2: <?= $lado2 ?></p>
-                <?php endif; ?>
-                <p class="mb-1">Área: <?= $area ?></p>
-                <p class="mb-1">Perímetro: <?= $perimetro ?></p>
-                <br>
-                <button onclick="irAtras()" class="btn btn-primary">Atrás</button>
-            </div>
+        // Validar que el lado 1 sea un número positivo
+        if ($lado1 <= 0) {
+            $errors[] = "Lado 1 debe ser un número positivo";
+        }
 
-            <!-- SweetAlert2 JS -->
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-            <script src="./js/script.js"></script>
-        </body>
-        </html>
-        <?php
-        exit; // Terminar el script después de mostrar resultados
+        // Validar lado 2 para Triángulo y Rectángulo
+        if ($figura === 'Triangulo' || $figura === 'Rectangulo') {
+            if (!isset($_POST['lado2'])) {
+                $errors[] = "Lado 2 no especificado";
+            } else {
+                $lado2 = floatval($_POST['lado2']);
+                if ($lado2 <= 0) {
+                    $errors[] = "Lado 2 debe ser un número positivo";
+                }
+            }
+        }
+
+        // Mostrar errores con SweetAlert2 si existen
+        if (!empty($errors)) {
+            mostrarErrores($errors);
+        } else {
+            // Si no hay errores, continuar con el código para manejar el formulario
+            $figura = crearFigura($figura, $lado1, $lado2 ?? null);
+
+            // Calcular área y perímetro
+            $area = Utiles::area($figura);
+            $perimetro = Utiles::perimetro($figura);
+
+            // Generar página de resultados
+            mostrarResultados($figura, $lado1, $lado2 ?? null, $area, $perimetro);
+            exit; // Terminar el script después de mostrar resultados
+        }
+    } else {
+        $errors[] = "Datos del formulario incompletos";
+        mostrarErrores($errors);
     }
 } else {
-    // Mostrar formulario
+    // Mostrar formulario si no se ha enviado
+    mostrarFormulario();
+}
+
+function crearFigura($tipo, $lado1, $lado2) {
+    switch ($tipo) {
+        case 'Triangulo':
+            return new Triangulo($lado1, $lado2);
+        case 'Rectangulo':
+            return new Rectangulo($lado1, $lado2);
+        case 'Cuadrado':
+            return new Cuadrado($lado1);
+        case 'Circulo':
+            return new Circulo($lado1);
+    }
+}
+
+function mostrarResultados($figura, $lado1, $lado2, $area, $perimetro) {
+    ?>
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <title>Resultados</title>
+        <link rel="stylesheet" href="./css/styles.css">
+    </head>
+    <body>
+    <div class="resultados">
+        <h2 class="text-center">Resultados</h2>
+        <p class="mb-1">Tipo de figura: <?= $figura->getTipoFigura() ?></p>
+        <p class="mb-1">Lado 1: <?= $lado1 ?></p>
+        <?php if ($lado2 !== null) : ?>
+            <p class="mb-1">Lado 2: <?= $lado2 ?></p>
+        <?php endif; ?>
+        <?php if ($figura instanceof Triangulo && $figura->getLado3() !== null) : ?>
+            <p class="mb-1">Lado 3: <?= $figura->getLado3() ?></p>
+        <?php endif; ?>
+        <p class="mb-1">Área: <?= $area !== null ? $area : 'N/A' ?></p>
+        <p class="mb-1">Perímetro: <?= $perimetro !== null ? $perimetro : 'N/A' ?></p>
+        <br>
+        <button onclick="irAtras()" class="btn btn-primary">Atrás</button>
+    </div>
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="./js/script.js"></script>
+    </body>
+    </html>
+    <?php
+}
+
+function mostrarErrores($errors) {
+    echo '<script>
+        Swal.fire({
+            icon: "error",
+            title: "Error de validación",
+            text: "' . implode('\n', $errors) . '",
+            confirmButtonColor: "#007bff"
+        });
+    </script>';
+}
+
+function mostrarFormulario() {
     ?>
     <!DOCTYPE html>
     <html lang="es">
@@ -129,11 +155,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="form-group">
-            <label for="lado2">Lado 2 (solo para Triángulo y Rectángulo):</label>
-            <input type="number" class="form-control" name="lado2" id="lado2" disabled>
-            <span id="errorLado2" style="color: red;"></span>
-        </div>
-
+                <label for="lado2">Lado 2 (solo para Triángulo y Rectángulo):</label>
+                <input type="number" class="form-control" name="lado2" id="lado2" disabled>
+                <span id="errorLado2" style="color: red;"></span>
+            </div>
 
             <button type="submit" class="btn btn-primary btn-block">Calcular</button>
         </form>
